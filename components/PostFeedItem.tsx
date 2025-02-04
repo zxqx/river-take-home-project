@@ -11,18 +11,18 @@ export default function PostFeedItem({ post }: Props) {
   const image = images[post.imageId as keyof typeof images];
 
   return (
-    <ImagePreview image={image}>
-      <View style={styles.container}>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>created by {post.createdById}</Text>
-          {post.caption && <Text style={styles.subtitle}>{post.caption}</Text>}
-        </View>
+    <View style={styles.container}>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>created by {post.createdById}</Text>
+        {post.caption && <Text style={styles.subtitle}>{post.caption}</Text>}
+      </View>
 
+      <ImagePreview image={image}>
         <View style={styles.imageContainer}>
           <Image source={image} style={styles.image} />
         </View>
-      </View>
-    </ImagePreview>
+      </ImagePreview>
+    </View>
   );
 }
 

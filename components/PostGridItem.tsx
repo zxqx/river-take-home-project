@@ -16,11 +16,11 @@ export default function PostGridItem({ post }: Props) {
         <View style={styles.imageContainer}>
           <Image source={image} style={styles.image} />
         </View>
-
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>created by {post.createdById}</Text>
-        </View>
       </ImagePreview>
+
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>created by {post.createdById}</Text>
+      </View>
     </View>
   );
 }

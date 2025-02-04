@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { TouchableOpacity, Modal, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { Modal, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { TapGestureHandler, State } from 'react-native-gesture-handler';
 
 interface Props {
   image: number;
@@ -8,12 +9,19 @@ interface Props {
 
 export default function ImagePreview({ image, children }: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
-
   return (
     <>
-      <TouchableOpacity onPress={() => setIsModalVisible(true)} activeOpacity={1}>
-        {children}
-      </TouchableOpacity>
+      <TapGestureHandler
+        onHandlerStateChange={(event) => {
+          if (event.nativeEvent.state === State.ACTIVE) {
+            setIsModalVisible(true);
+          }
+        }}
+        maxDurationMs={250}
+        maxDist={10}
+      >
+        <Pressable>{children}</Pressable>
+      </TapGestureHandler>
 
       <Modal
         animationType="fade"
