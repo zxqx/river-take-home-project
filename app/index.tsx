@@ -1,15 +1,20 @@
-import { Text, View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import PostList from '@/components/PostList';
+import PostGrid from '@/components/PostGrid';
+import PostFeed from '@/components/PostFeed';
+import { posts } from '@/sample-data/posts';
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <View style={styles.container}>
+      <PostFeed posts={posts} />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
