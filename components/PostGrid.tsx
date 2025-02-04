@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 10,
+    paddingBottom: 64,
     paddingHorizontal: 16,
   },
   columnWrapper: {

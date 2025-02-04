@@ -15,7 +15,7 @@ export default function PostFeedItem({ post }: Props) {
       <View style={styles.container}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>created by {post.createdById}</Text>
-          <Text style={styles.subtitle}>{post.caption}</Text>
+          {post.caption && <Text style={styles.subtitle}>{post.caption}</Text>}
         </View>
 
         <View style={styles.imageContainer}>
