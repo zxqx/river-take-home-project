@@ -11,15 +11,15 @@ export default function PostListItem({ post }: Props) {
   const image = images[post.imageId as keyof typeof images];
 
   return (
-    <ImagePreview image={image}>
-      <View style={styles.container}>
+    <View style={styles.container}>
+      <ImagePreview image={image}>
         <Image source={image} style={styles.image} />
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{post.imageId}</Text>
-          <Text style={styles.subtitle}>created by {post.createdById}</Text>
-        </View>
+      </ImagePreview>
+      <View style={styles.textContainer}>
+        <Text style={styles.title}>{post.imageId}</Text>
+        <Text style={styles.subtitle}>created by {post.createdById}</Text>
       </View>
-    </ImagePreview>
+    </View>
   );
 }
 

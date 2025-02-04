@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Modal, Image, Pressable, StyleSheet, Dimensions } from 'react-native';
-import { TapGestureHandler, State } from 'react-native-gesture-handler';
+import { Modal, Pressable, StyleSheet, Dimensions } from 'react-native';
+import { TapGestureHandler, State, PinchGestureHandler } from 'react-native-gesture-handler';
+import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
 interface Props {
   image: number;
@@ -9,6 +10,13 @@ interface Props {
 
 export default function ImagePreview({ image, children }: Props) {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const scale = useSharedValue(1);
+  const baseScale = useSharedValue(1);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value * baseScale.value }],
+  }));
+
   return (
     <>
       <TapGestureHandler
@@ -27,10 +35,35 @@ export default function ImagePreview({ image, children }: Props) {
         animationType="fade"
         transparent={true}
         visible={isModalVisible}
-        onRequestClose={() => setIsModalVisible(false)}
+        onRequestClose={() => {
+          setIsModalVisible(false);
+          setTimeout(() => {
+            scale.value = 1;
+            baseScale.value = 1;
+          }, 300);
+        }}
       >
-        <Pressable style={styles.modalContainer} onPress={() => setIsModalVisible(false)}>
-          <Image source={image} style={styles.modalImage} />
+        <Pressable
+          style={styles.modalContainer}
+          onPress={() => {
+            setIsModalVisible(false);
+            setTimeout(() => {
+              scale.value = 1;
+              baseScale.value = 1;
+            }, 300);
+          }}
+        >
+          <PinchGestureHandler
+            onGestureEvent={(event) => {
+              scale.value = event.nativeEvent.scale;
+            }}
+            onEnded={() => {
+              baseScale.value = scale.value * baseScale.value;
+              scale.value = 1;
+            }}
+          >
+            <Animated.Image source={image} style={[styles.modalImage, animatedStyle]} />
+          </PinchGestureHandler>
         </Pressable>
       </Modal>
     </>
