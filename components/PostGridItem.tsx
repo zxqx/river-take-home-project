@@ -1,4 +1,5 @@
 import { Text, View, Image, StyleSheet } from 'react-native';
+import ImagePreview from '@/components/ImagePreview';
 import { Post } from '@/types';
 import { images } from '@/constants/images';
 
@@ -7,19 +8,19 @@ interface Props {
 }
 
 export default function PostGridItem({ post }: Props) {
-  const getImageSource = (imageId: string) => {
-    return images[imageId as keyof typeof images];
-  };
+  const image = images[post.imageId as keyof typeof images];
 
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
-        <Image source={getImageSource(post.imageId)} style={styles.image} />
-      </View>
+      <ImagePreview image={image}>
+        <View style={styles.imageContainer}>
+          <Image source={image} style={styles.image} />
+        </View>
 
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>created by {post.createdById}</Text>
-      </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>created by {post.createdById}</Text>
+        </View>
+      </ImagePreview>
     </View>
   );
 }

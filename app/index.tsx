@@ -7,7 +7,7 @@ import { posts } from '@/sample-data/posts';
 export default function Index() {
   return (
     <View style={styles.container}>
-      <PostFeed posts={posts} />
+      <PostGrid posts={posts} />
     </View>
   );
 }
