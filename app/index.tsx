@@ -1,6 +1,10 @@
 import { View, StyleSheet, Pressable, Text, Dimensions } from 'react-native';
 import { useState } from 'react';
-import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
+import {
+  GestureHandlerRootView,
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -35,12 +39,17 @@ export default function Index() {
     setActiveTab(tab);
   };
 
-  const gestureHandler = useAnimatedGestureHandler({
-    onStart: (_, ctx: any) => {
+  type GestureContext = {
+    startX: number;
+  };
+
+  const gestureHandler = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, GestureContext>({
+    onStart: (_, ctx) => {
       ctx.startX = translateX.value;
     },
     onActive: (event, ctx) => {
       const newValue = ctx.startX + event.translationX;
+
       translateX.value = Math.min(Math.max(newValue, -width), 0);
     },
     onEnd: (event) => {
