@@ -1,6 +1,6 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, cloneElement, Children, ReactElement } from 'react';
 import { View, Pressable, StyleSheet, Modal } from 'react-native';
-import React from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface Props {
   trigger: React.ReactNode;
@@ -20,19 +20,21 @@ export const MenuContext = createContext<MenuContext>({
 export function Menu({ trigger, children }: Props) {
   const [visible, setVisible] = useState(false);
   const closeMenu = () => setVisible(false);
+  const insets = useSafeAreaInsets();
 
-  const childrenList = React.Children.toArray(children);
+  const childrenList = Children.toArray(children);
   const isLastItem = (index: number) => index === childrenList.length - 1;
 
   return (
     <View>
       <Pressable onPress={() => setVisible(true)}>{trigger}</Pressable>
+
       <Modal visible={visible} transparent onRequestClose={closeMenu}>
         <Pressable style={styles.overlay} onPress={closeMenu}>
           <MenuContext.Provider value={{ closeMenu, isLastItem }}>
-            <View style={styles.menuContainer}>
-              {React.Children.map(children, (child, index) =>
-                React.cloneElement(child as React.ReactElement, { index })
+            <View style={[styles.container, { top: insets.top + 40 }]}>
+              {Children.map(children, (child, index) =>
+                cloneElement(child as ReactElement, { index })
               )}
             </View>
           </MenuContext.Provider>
@@ -46,9 +48,8 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
   },
-  menuContainer: {
+  container: {
     position: 'absolute',
-    top: 100,
     right: 16,
     width: 118,
     backgroundColor: '#fff',

@@ -17,6 +17,16 @@ export default function ImagePreview({ image, children }: Props) {
     transform: [{ scale: scale.value * baseScale.value }],
   }));
 
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+
+    // when modal close animation completes, reset scale
+    setTimeout(() => {
+      scale.value = 1;
+      baseScale.value = 1;
+    }, 300);
+  };
+
   return (
     <>
       <TapGestureHandler
@@ -33,26 +43,11 @@ export default function ImagePreview({ image, children }: Props) {
 
       <Modal
         animationType="fade"
-        transparent={true}
+        transparent
         visible={isModalVisible}
-        onRequestClose={() => {
-          setIsModalVisible(false);
-          setTimeout(() => {
-            scale.value = 1;
-            baseScale.value = 1;
-          }, 300);
-        }}
+        onRequestClose={handleModalClose}
       >
-        <Pressable
-          style={styles.modalContainer}
-          onPress={() => {
-            setIsModalVisible(false);
-            setTimeout(() => {
-              scale.value = 1;
-              baseScale.value = 1;
-            }, 300);
-          }}
-        >
+        <Pressable style={styles.container} onPress={handleModalClose}>
           <PinchGestureHandler
             onGestureEvent={(event) => {
               scale.value = event.nativeEvent.scale;
@@ -62,7 +57,7 @@ export default function ImagePreview({ image, children }: Props) {
               scale.value = 1;
             }}
           >
-            <Animated.Image source={image} style={[styles.modalImage, animatedStyle]} />
+            <Animated.Image source={image} style={[styles.image, animatedStyle]} />
           </PinchGestureHandler>
         </Pressable>
       </Modal>
@@ -71,13 +66,13 @@ export default function ImagePreview({ image, children }: Props) {
 }
 
 const styles = StyleSheet.create({
-  modalContainer: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'rgba(30, 30, 30, 0.95)',
   },
-  modalImage: {
+  image: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').width,
   },

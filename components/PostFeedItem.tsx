@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textContainer: {
-    display: 'flex',
     flexDirection: 'column',
     gap: 4,
     paddingLeft: 10,

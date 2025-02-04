@@ -26,9 +26,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 10,
   },
-  columnWrapper: {
-    gap: 16,
-  },
   separator: {
     height: 20,
   },

@@ -15,6 +15,7 @@ export default function PostListItem({ post }: Props) {
       <ImagePreview image={image}>
         <Image source={image} style={styles.image} />
       </ImagePreview>
+
       <View style={styles.textContainer}>
         <Text style={styles.title}>{post.imageId}</Text>
         <Text style={styles.subtitle}>created by {post.createdById}</Text>
