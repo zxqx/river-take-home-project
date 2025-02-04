@@ -1,6 +1,6 @@
 import { Text, View, Image, StyleSheet } from 'react-native';
 import ImagePreview from '@/components/ImagePreview';
-import { images } from '@/constants/images';
+import { getImageById } from '@/utils/images';
 import { Post } from '@/types';
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function PostFeedItem({ post }: Props) {
-  const image = images[post.imageId as keyof typeof images];
+  const image = getImageById(post.imageId);
 
   return (
     <View style={styles.container}>
